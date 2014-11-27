@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>TSConfig example</title>
+</head>
+<body>
+<script src="tsconfig.js"></script>
+<script>
+	'use strict';
+	function write_results(changed_values)
+	{
+		var output = document.createDocumentFragment();
+		if (changed_values.length) {
+			for (var i = 0, len = changed_values.length; i < len; ++i) {
+				var config_item = changed_values[i];
+				var output_item = document.createElement('div');
+				output_item.textContent = config_item.section + '.' + config_item.name + ' = ' + config_item.value;
+				output.appendChild(output_item);
+			}
+			document.body.textContent = '';
+			document.body.appendChild(output);
+		} else {
+			document.body.textContent = 'Nothing changed.';
+		}
+	}
+	function config_cancelled()
+	{
+		document.body.textContent = '';
+		document.body.appendChild(document.createTextNode('Cancelled.'));
+	}
+	var config_data = [
+		{
+			section: 'General',
+			data: [
+				{ name: 'title', type: 'line', label: 'Title', maxlength: 20, value: 'Default title', title: 'Tooltip text 1' },
+				{ name: 'amount', type: 'number', label: 'Amount', min: 0, max: 100, step: 0.5, value: 5, title: 'Tooltip text 2' },
+				{ name: 'another-title', type: 'line', label: 'Another title', maxlength: 20 },
+				{ name: 'another-amount', type: 'number', label: 'Another amount', min: 0, max: 100 },
+				{ name: 'message', type: 'text', label: 'Your message', maxlength: 200, value: "Some text\nhere", title: 'Tooltip text 3' },
+				{ name: 'mytype', type: 'list', label: 'Type', value: ['Item 1', 'Item 2', 'Item 3'], selected: 1 },
+			]
+		},
+		{
+			section: 'Second',
+			data: [
+				{ name: 'title2', type: 'line', label: 'Title 2', maxlength: 20, value: '', title: 'Tooltip text 1' },
+				{ name: 'amount2', type: 'number', label: 'Amount 2', value: 5, title: 'Tooltip text 2' },
+				{ name: 'message2', type: 'text', label: 'Your message 2', title: 'Tooltip text 3' },
+				{ name: 'agree2', type: 'check', label: 'I agree 2', title: 'Tooltip text 4' },
+				{ name: 'agree22', type: 'check', label: 'I agree 22', value: true },
+				{ name: 'agree23', type: 'check', label: 'I agree 23' },
+				{ name: 'agree24', type: 'check', label: 'I agree 24' },
+				{ name: 'agree25', type: 'check', label: 'I agree 25' }
+			]
+		},
+		{
+			section: 'Other',
+			data: [
+				{ name: 'title3', type: 'line', label: 'Title 3', maxlength: 20, value: 'Default title 3' },
+				{ name: 'amount3', type: 'number', label: 'Amount 3', min: -10, max: 100 },
+				{ name: 'message3', type: 'text', label: 'Your message 3'},
+				{ name: 'message4', type: 'text', label: 'Your message 4'},
+			]
+		}
+	];
+	var t = new TSConfig();
+	t.on('save', write_results);
+	t.on('cancel', config_cancelled);
+	t.show(config_data);
+	// t.hide();
+</script>
+</body>
+</html>
