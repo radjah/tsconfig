@@ -41,9 +41,12 @@ function ()
 }
 ```
 
-### show(config_data)
+### show(config_data, save_button_text, cancel_button_text)
 
 Shows generated UI. config_data is a an array of sections (hashes).
+
+* save_button_text - Save button text. Optional.
+* cancel_button_text - Cancel button text. Optional.
 
 ```
 var item = {
